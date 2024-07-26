@@ -12,7 +12,7 @@ clock = pygame.time.Clock()
 
 
 #title
-pygame.display.set_caption("7 Malicous Nights")
+pygame.display.set_caption("a Malicous Nights")
 
 #create the screen/window to be viewed
 screen = pygame.display.set_mode((1000,600))
