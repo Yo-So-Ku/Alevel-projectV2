@@ -1,6 +1,9 @@
 #importing pygame to gain acces to its functions.
 import pygame
 
+#import ButtonClass
+import ButtonClass
+
 #Importing exit from sys to be used to close the window
 from sys import exit
 
@@ -31,50 +34,32 @@ Option_button_image = pygame.image.load("Images/OptionButton.png").convert_alpha
 
 #create buttons
 
-Start_button = Button(200,300,Start_button_image,1)
-Exit__button = Button(400,300,Exit_button_image,1)
-Option_button = Button(600,300,Option_button_image,1)
-
-#Classes
-
-#Class button
-
-#button class
-class Button():
-
-	def __init__(self, x, y, image, scale):
-		#This is to get the width and the hight of the image being made into a button so it can be scaled
-		width = image.get_width()
-		height = image.get_height()
-		#Using the width and hight of the image it is then multiplied by the imputted scale factor
-		self.image = pygame.transform.scale(image, (int(width * scale), int(height * scale)))
-		self.rect = self.image.get_rect()
-		#The postion on the screen where the button would be
-		self.rect.topleft = (x, y)
-		self.clicked = False
-
-	def draw(self, surface):
-		action = False
-		#get mouse position
-		pos = pygame.mouse.get_pos()
-
-		#check mouseover and clicked conditions
-		if self.rect.collidepoint(pos):
-			if (pygame.mouse.get_pressed()[0] == 1) and (self.clicked == False):
-				self.clicked = True
-				#Action to be returnd if this codeblock is run
-				action = True
-		#to stop it from repeating itself check the moment its nolonger pressed			
-        if (pygame.mouse.get_pressed()[0] == 0) and (self.clicked == True):
-	         self.clicked = False
-
-		#draw button on screen
-		surface.blit(self.image, (self.rect.x, self.rect.y))
-
-	     return action 
-
-
-
-
+Start_button = ButtonClass.Button(200,300,Start_button_image,0.5)
+Exit_button = ButtonClass.Button(400,300,Exit_button_image,0.5)
+Option_button = ButtonClass.Button(600,300,Option_button_image,0.5)
 
 #work please
+
+while running:
+
+    #Creating the "X" button
+    #looping through all buttons to see wich had been pressed.
+    for event in pygame.event.get():
+        #if the button pressed matched the "X" button then
+        if event.type == pygame.QUIT:
+            #close the window
+            pygame.quit() 
+
+    screen.fill((220,230,240))
+
+    #if its on the main menu then
+    while mainMenuOpen:
+        #backround
+        screen.fill((220,230,240))
+        #start button
+        if Start_button.draw(screen):
+            print("Start")
+        if Exit_button.draw(screen):
+            print("Exit")
+        if Option_button.draw(screen):
+            print("Options")
