@@ -26,17 +26,24 @@ pygame.display.set_caption("a Malicous Nights")
 screen = pygame.display.set_mode((1000,600))
 
 
-# Load images
+# Load main menu images
 
 Start_button_image = pygame.image.load("Images/startButton.png").convert_alpha()
 Exit_button_image = pygame.image.load("Images/ExitButton.png").convert_alpha()
 Option_button_image = pygame.image.load("Images/OptionButton.png").convert_alpha()
 
-#create buttons
+# load options menu images
+
+optback_button_image = pygame.image.load("Images/BackButton.jpeg").convert_alpha()
+
+#create main menu buttons
 
 Start_button = ButtonClass.Button(350,400,Start_button_image,0.04)
 Exit_button = ButtonClass.Button(650,400,Exit_button_image,0.4)
 Option_button = ButtonClass.Button(20,400,Option_button_image,0.4)
+
+#create options menu buttons
+optback_button = ButtonClass.Button(0,0,optback_button_image,0.4)
 
 
 while running:
@@ -48,13 +55,26 @@ while running:
             nightOpen = True
     #options button
     if Option_button.draw(screen):
-        #if pressed then the condition for options will start
             print("Options")
+            #if pressed then the condition for options will start
+            OptionOpen = True
     #exit button
     if Exit_button.draw(screen):
             print("Exit")
             #this would end the loop and close the game.
             running = False
+
+    #options menu
+    if OptionOpen == True:
+        #cover the screen to remove the old buttons
+        screen.fill((250,150,10))
+
+        #create the exit back to homescreen button
+        if optback_button.draw(screen):
+            print("back")
+            #go back 
+            OptionOpen = False
+        
 
     #Creating the "X" button
     #looping through all buttons to see wich had been pressed.
@@ -63,19 +83,6 @@ while running:
         if event.type == pygame.QUIT:
             #close the window
             running = False
-        
-
-    
-    #if its on the main menu then
-    #while mainMenuOpen:
-        #backround
-        #screen.fill((220,230,240))
-        #start button
-        
-        #if Exit_button.draw(screen):
-          #  print("Exit")
-       # if Option_button.draw(screen):
-          #  print("Options")
 
     #Update the screen
     pygame.display.update()
