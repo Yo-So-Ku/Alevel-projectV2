@@ -56,12 +56,12 @@ optback_button = ButtonClass.Button(0,0,optback_button_image,0.4)
 
 #create play menu buttons
 
-NightButton1 = ButtonClass.Button(30,0,NightButton1_image,1)
-NightButton2 = ButtonClass.Button(30,100,NightButton2_image,1)
-NightButton3 = ButtonClass.Button(30,200,NightButton3_image,1)
-NightButton4 = ButtonClass.Button(30,300,NightButton4_image,1)
-NightButton5 = ButtonClass.Button(30,400,NightButton5_image,1)
-NightButton6 = ButtonClass.Button(30,500,NightButton6_image,1)
+NightButton1 = ButtonClass.Button(90,0,NightButton1_image,1)
+NightButton2 = ButtonClass.Button(50,100,NightButton2_image,1)
+NightButton3 = ButtonClass.Button(50,200,NightButton3_image,1)
+NightButton4 = ButtonClass.Button(50,300,NightButton4_image,1)
+NightButton5 = ButtonClass.Button(50,400,NightButton5_image,1)
+NightButton6 = ButtonClass.Button(50,500,NightButton6_image,1)
 
 
 while running:
