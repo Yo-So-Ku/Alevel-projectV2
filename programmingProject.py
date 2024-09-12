@@ -36,6 +36,15 @@ Option_button_image = pygame.image.load("Images/OptionButton.png").convert_alpha
 
 optback_button_image = pygame.image.load("Images/BackButton.jpeg").convert_alpha()
 
+# load play menu images
+
+NightButton1_image = pygame.image.load("Images/NightButton1.png").convert_alpha()
+NightButton2_image = pygame.image.load("Images/NightButton2.png").convert_alpha()
+NightButton3_image = pygame.image.load("Images/NightButton3.png").convert_alpha()
+NightButton4_image = pygame.image.load("Images/NightButton4.png").convert_alpha()
+NightButton5_image = pygame.image.load("Images/NightButton5.png").convert_alpha()
+NightButton6_image = pygame.image.load("Images/NightButton6.png").convert_alpha()
+
 #create main menu buttons
 
 Start_button = ButtonClass.Button(350,400,Start_button_image,0.04)
@@ -44,6 +53,15 @@ Option_button = ButtonClass.Button(20,400,Option_button_image,0.4)
 
 #create options menu buttons
 optback_button = ButtonClass.Button(0,0,optback_button_image,0.4)
+
+#create play menu buttons
+
+NightButton1 = ButtonClass.Button(30,0,NightButton1_image,1)
+NightButton2 = ButtonClass.Button(30,100,NightButton2_image,1)
+NightButton3 = ButtonClass.Button(30,200,NightButton3_image,1)
+NightButton4 = ButtonClass.Button(30,300,NightButton4_image,1)
+NightButton5 = ButtonClass.Button(30,400,NightButton5_image,1)
+NightButton6 = ButtonClass.Button(30,500,NightButton6_image,1)
 
 
 while running:
@@ -74,6 +92,32 @@ while running:
             print("back")
             #go back 
             OptionOpen = False
+    
+    #Play menu
+    if nightOpen == True:
+        #cover the screen to remove the old buttons
+        screen.fill((120,110,150))
+
+        #create back button to homescreen
+        if optback_button.draw(screen):
+            print("back")
+            #return to main menu
+            nightOpen = False
+        
+        #create the level select/night buttons
+        if NightButton1.draw(screen):
+            print("night 1")
+        if NightButton2.draw(screen):
+            print("night 2")
+        if NightButton3.draw(screen):
+            print("night 3")
+        if NightButton4.draw(screen):
+            print("night 4")
+        if NightButton5.draw(screen):
+            print("night 5")
+        if NightButton6.draw(screen):
+            print("night 6")
+
         
 
     #Creating the "X" button
