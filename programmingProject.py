@@ -15,6 +15,7 @@ running = True
 mainMenuOpen = True
 nightOpen = False
 OptionOpen = False
+unlockEverythingCheck = False
 
 #frame limit
 clock = pygame.time.Clock()
@@ -101,14 +102,16 @@ while running:
             OptionOpen = False
         
         #the unlock everything button
-        if unlockEverything1_button.draw(screen):
-            print("unlock everything")
-            unlockEverythingCheck = True
-            #create the unlock everything of button
-            if unlockEverything2_button.draw (screen):
-                print("relock everything")
-                unlockEverythingCheck = False
-    
+        if unlockEverythingCheck = False:
+            if unlockEverything1_button.draw(screen):
+               print("unlock everything")
+               unlockEverythingCheck = True
+
+        #the relock everything button
+        if unlockEverythingCheck = True:
+            if unlockEverything2_button.draw(screen):
+               print("relock everything")
+               unlockEverythingCheck = False
     #Play menu
     if nightOpen == True:
         #cover the screen to remove the old buttons
