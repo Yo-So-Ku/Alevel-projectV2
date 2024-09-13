@@ -35,6 +35,8 @@ Option_button_image = pygame.image.load("Images/OptionButton.png").convert_alpha
 # load options menu images
 
 optback_button_image = pygame.image.load("Images/BackButton.jpeg").convert_alpha()
+unlockEverything1_image = pygame.image.load("Images/UnlockEverything1.png").convert_alpha()
+unlockEverything2_image = pygame.image.load("Images/UnlockEverything2.png").convert_alpha()
 
 # load play menu images
 
@@ -53,6 +55,8 @@ Option_button = ButtonClass.Button(20,400,Option_button_image,0.4)
 
 #create options menu buttons
 optback_button = ButtonClass.Button(0,0,optback_button_image,0.4)
+unlockEverything1_button = ButtonClass.Button(50,100,unlockEverything1_image,1)
+unlockEverything2_button = ButtonClass.Button(50,100,unlockEverything2_image,1)
 
 #create play menu buttons
 
@@ -65,24 +69,27 @@ NightButton6 = ButtonClass.Button(50,500,NightButton6_image,1)
 
 
 while running:
-    screen.fill((220,230,240))
-    #start button
-    if Start_button.draw(screen):
-            print("Start")
-            #if pressed then the condition for the main game will start
-            nightOpen = True
-    #options button
-    if Option_button.draw(screen):
-            print("Options")
-            #if pressed then the condition for options will start
-            OptionOpen = True
-    #exit button
-    if Exit_button.draw(screen):
-            print("Exit")
-            #this would end the loop and close the game.
-            running = False
 
-    #options menu
+    #  condition for main menu buttons to open
+    if mainMenuOpen == True:
+        screen.fill((220,230,240))
+        #start button
+        if Start_button.draw(screen):
+                print("Start")
+                #if pressed then the condition for the main game will start
+                nightOpen = True
+        #options button
+        if Option_button.draw(screen):
+                print("Options")
+                #if pressed then the condition for options will start
+                OptionOpen = True
+        #exit button
+        if Exit_button.draw(screen):
+                print("Exit")
+                #this would end the loop and close the game.
+                running = False
+
+    # options menu
     if OptionOpen == True:
         #cover the screen to remove the old buttons
         screen.fill((250,150,10))
@@ -92,6 +99,15 @@ while running:
             print("back")
             #go back 
             OptionOpen = False
+        
+        #the unlock everything button
+        if unlockEverything1_button.draw(screen):
+            print("unlock everything")
+            unlockEverythingCheck = True
+            #create the unlock everything of button
+            if unlockEverything2_button.draw (screen):
+                print("relock everything")
+                unlockEverythingCheck = False
     
     #Play menu
     if nightOpen == True:
@@ -115,8 +131,10 @@ while running:
             print("night 4")
         if NightButton5.draw(screen):
             print("night 5")
-        if NightButton6.draw(screen):
-            print("night 6")
+        #check if everything is unlocked
+        if unlockEverythingCheck == True:
+            if NightButton6.draw(screen):
+                print("night 6")
 
         
 
