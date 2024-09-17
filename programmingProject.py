@@ -16,6 +16,7 @@ mainMenuOpen = True
 nightOpen = False
 OptionOpen = False
 unlockEverythingCheck = False
+mainlevel = False
 
 #frame limit
 clock = pygame.time.Clock()
@@ -79,11 +80,13 @@ while running:
                 print("Start")
                 #if pressed then the condition for the main game will start
                 nightOpen = True
+                mainMenuOpen = False
         #options button
         if Option_button.draw(screen):
                 print("Options")
                 #if pressed then the condition for options will start
                 OptionOpen = True
+                mainMenuOpen = False
         #exit button
         if Exit_button.draw(screen):
                 print("Exit")
@@ -100,15 +103,16 @@ while running:
             print("back")
             #go back 
             OptionOpen = False
+            mainMenuOpen = True
         
         #the unlock everything button
-        if unlockEverythingCheck = False:
+        if unlockEverythingCheck == False:
             if unlockEverything1_button.draw(screen):
                print("unlock everything")
                unlockEverythingCheck = True
 
         #the relock everything button
-        if unlockEverythingCheck = True:
+        if unlockEverythingCheck == True:
             if unlockEverything2_button.draw(screen):
                print("relock everything")
                unlockEverythingCheck = False
@@ -122,10 +126,13 @@ while running:
             print("back")
             #return to main menu
             nightOpen = False
+            mainMenuOpen = True
         
         #create the level select/night buttons
         if NightButton1.draw(screen):
             print("night 1")
+            nightOpen = False
+            mainlevel = True
         if NightButton2.draw(screen):
             print("night 2")
         if NightButton3.draw(screen):
@@ -138,6 +145,11 @@ while running:
         if unlockEverythingCheck == True:
             if NightButton6.draw(screen):
                 print("night 6")
+    
+    #main game
+
+    if mainlevel == True:
+        screen.fill((200,200,200))
 
         
 
