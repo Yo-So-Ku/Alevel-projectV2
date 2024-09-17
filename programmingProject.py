@@ -27,6 +27,9 @@ pygame.display.set_caption("a Malicous Nights")
 #create the screen/window to be viewed
 screen = pygame.display.set_mode((1000,600))
 
+#time
+counterfornight = 600
+
 
 # Load main menu images
 
@@ -135,12 +138,20 @@ while running:
             mainlevel = True
         if NightButton2.draw(screen):
             print("night 2")
+            nightOpen = False
+            mainlevel = True
         if NightButton3.draw(screen):
             print("night 3")
+            nightOpen = False
+            mainlevel = True
         if NightButton4.draw(screen):
             print("night 4")
+            nightOpen = False
+            mainlevel = True
         if NightButton5.draw(screen):
             print("night 5")
+            nightOpen = False
+            mainlevel = True
         #check if everything is unlocked
         if unlockEverythingCheck == True:
             if NightButton6.draw(screen):
@@ -150,6 +161,15 @@ while running:
 
     if mainlevel == True:
         screen.fill((200,200,200))
+
+        #start a timer
+        counterfornight = counterfornight - 1
+
+        #if the counter is finished end game
+        if counterfornight < 0:
+            mainlevel = False
+            mainMenuOpen = True
+            
 
         
 
