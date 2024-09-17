@@ -16,6 +16,9 @@ mainMenuOpen = True
 nightOpen = False
 OptionOpen = False
 unlockEverythingCheck = False
+mainlevel = False
+nightbeaten = False
+nightlost = False
 
 #frame limit
 clock = pygame.time.Clock()
@@ -25,6 +28,9 @@ pygame.display.set_caption("a Malicous Nights")
 
 #create the screen/window to be viewed
 screen = pygame.display.set_mode((1000,600))
+
+#time
+counterfornight = 600
 
 
 # Load main menu images
@@ -79,17 +85,13 @@ while running:
                 print("Start")
                 #if pressed then the condition for the main game will start
                 nightOpen = True
-                #close main menu
                 mainMenuOpen = False
-
         #options button
         if Option_button.draw(screen):
                 print("Options")
                 #if pressed then the condition for options will start
                 OptionOpen = True
-                #close main menu
                 mainMenuOpen = False
-
         #exit button
         if Exit_button.draw(screen):
                 print("Exit")
@@ -134,20 +136,71 @@ while running:
         #create the level select/night buttons
         if NightButton1.draw(screen):
             print("night 1")
+            nightOpen = False
+            mainlevel = True
         if NightButton2.draw(screen):
             print("night 2")
+            nightOpen = False
+            mainlevel = True
         if NightButton3.draw(screen):
             print("night 3")
+            nightOpen = False
+            mainlevel = True
         if NightButton4.draw(screen):
             print("night 4")
+            nightOpen = False
+            mainlevel = True
         if NightButton5.draw(screen):
             print("night 5")
+            nightOpen = False
+            mainlevel = True
         #check if everything is unlocked
         if unlockEverythingCheck == True:
             if NightButton6.draw(screen):
                 print("night 6")
 
+    #won screen 
+    if nightbeaten == True:
+        screen.fill((100,100,100))
+        #create back button to homescreen
+        if optback_button.draw(screen):
+            print("back")
+            #return to main menu
+            nightbeaten = False
+            mainMenuOpen = True
+    
+    #loose screen
+    if nightlost == True:
+        screen.fill((110,110,110))
+        #create back button to homescreen
+        if optback_button.draw(screen):
+            print("back")
+            #return to main menu
+            nightlost = False
+            mainMenuOpen = True
+
+    
+    #main game
+
+    if mainlevel == True:
+        screen.fill((200,200,200))
+
+        #start a timer
+        counterfornight = counterfornight - 1
+
+        #if the counter is finished end game
+        if counterfornight == -1:
+            print("night beaten")
+            mainlevel = False
+            nightbeaten = True
+            counterfornight = 600
         
+        #jumpscare condition
+        elif counterfornight == -10:
+            print("night lost")
+            mainlevel = False
+
+
 
     #Creating the "X" button
     #looping through all buttons to see wich had been pressed.
