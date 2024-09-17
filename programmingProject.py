@@ -166,12 +166,18 @@ while running:
         counterfornight = counterfornight - 1
 
         #if the counter is finished end game
-        if counterfornight < 0:
+        if counterfornight == -1:
+            print("night beaten")
             mainlevel = False
             mainMenuOpen = True
-            
-
+            counterfornight = 600
         
+        #jumpscare condition
+        elif counterfornight == -10:
+            print("night lost")
+            mainlevel = False
+
+
 
     #Creating the "X" button
     #looping through all buttons to see wich had been pressed.
