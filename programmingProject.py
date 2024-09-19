@@ -54,6 +54,11 @@ NightButton4_image = pygame.image.load("Images/NightButton4.png").convert_alpha(
 NightButton5_image = pygame.image.load("Images/NightButton5.png").convert_alpha()
 NightButton6_image = pygame.image.load("Images/NightButton6.png").convert_alpha()
 
+#load main game images
+
+won6am_image = pygame.image.load("Images/6am_won.jpeg").convert_alpha()
+lost6am_image = pygame.image.load("Images/dead_lost.jpeg").convert_alpha()
+
 #create main menu buttons
 
 Start_button = ButtonClass.Button(350,400,Start_button_image,0.04)
@@ -162,6 +167,9 @@ while running:
     #won screen 
     if nightbeaten == True:
         screen.fill((100,100,100))
+        #show the won screen
+        screen.blit(won6am_image,(0,0))
+
         #create back button to homescreen
         if optback_button.draw(screen):
             print("back")
@@ -172,6 +180,9 @@ while running:
     #loose screen
     if nightlost == True:
         screen.fill((110,110,110))
+        # show the lost screen
+        screen.blit(lost6am_image,(0,0))
+
         #create back button to homescreen
         if optback_button.draw(screen):
             print("back")
