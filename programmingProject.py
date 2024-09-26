@@ -1,16 +1,23 @@
 #importing pygame to gain acces to its functions.
 import pygame
+from pygame.locals import *
 
 #import ButtonClass
 import ButtonClass
+
+#Import Malus class
+import MalusClass
 
 #Importing exit from sys to be used to close the window
 from sys import exit
 
 #initialise the pygame module
 pygame.init()
-
-#Variables:
+######################################################################################################################
+######################################################################################################################
+#############    Variables:
+######################################################################################################################
+######################################################################################################################
 running = True
 mainMenuOpen = True
 nightOpen = False
@@ -19,6 +26,8 @@ unlockEverythingCheck = False
 mainlevel = False
 nightbeaten = False
 nightlost = False
+currentScreen = 1
+lightOn = False
 
 #frame limit
 clock = pygame.time.Clock()
@@ -59,6 +68,22 @@ NightButton6_image = pygame.image.load("Images/NightButton6.png").convert_alpha(
 won6am_image = pygame.image.load("Images/6am_won.jpeg").convert_alpha()
 lost6am_image = pygame.image.load("Images/dead_lost.jpeg").convert_alpha()
 
+officebehindv0 = pygame.image.load("mainBackrounds/Officebehind screen.png").convert_alpha()
+officebehindv1 = pygame.image.load("mainBackrounds/Officebehindv1.jpg").convert_alpha()
+officebehindv2 = pygame.image.load("mainBackrounds/Officebehindv2.jpg").convert_alpha()
+officebehindv3 = pygame.image.load("mainBackrounds/Officebehindv3.jpg").convert_alpha()
+officebehindv4 = pygame.image.load("mainBackrounds/Officebehindv4.jpg").convert_alpha()
+
+#scaleing the main game images
+thewon6am_image = pygame.transform.scale(won6am_image,(1000,600))
+thelost6am_image = pygame.transform.scale(lost6am_image,(1000,600))
+
+theofficebehindv0 = pygame.transform.scale(officebehindv0,(1000,600))
+theofficebehindv1 = pygame.transform.scale(officebehindv1,(1000,600))
+theofficebehindv2 = pygame.transform.scale(officebehindv2,(1000,600))
+theofficebehindv3 = pygame.transform.scale(officebehindv3,(1000,600))
+theofficebehindv4 = pygame.transform.scale(officebehindv4,(1000,600))
+
 #create main menu buttons
 
 Start_button = ButtonClass.Button(350,400,Start_button_image,0.04)
@@ -79,6 +104,19 @@ NightButton4 = ButtonClass.Button(50,300,NightButton4_image,1)
 NightButton5 = ButtonClass.Button(50,400,NightButton5_image,1)
 NightButton6 = ButtonClass.Button(50,500,NightButton6_image,1)
 
+lastClicked = 0
+
+
+
+###################################################################################################################
+###################################################################################################################
+###################################################################################################################
+###
+##             MAIN looop
+###
+##################################################################################################################
+###################################################################################################################
+###################################################################################################################
 
 while running:
 
@@ -157,6 +195,8 @@ while running:
             mainlevel = True
         if NightButton5.draw(screen):
             print("night 5")
+            #ENEMIES
+            Monster1 = MalusClass.Malus(30,0)
             nightOpen = False
             mainlevel = True
         #check if everything is unlocked
@@ -168,7 +208,7 @@ while running:
     if nightbeaten == True:
         screen.fill((100,100,100))
         #show the won screen
-        screen.blit(won6am_image,(0,0))
+        screen.blit(thewon6am_image,(0,0))
 
         #create back button to homescreen
         if optback_button.draw(screen):
@@ -181,7 +221,7 @@ while running:
     if nightlost == True:
         screen.fill((110,110,110))
         # show the lost screen
-        screen.blit(lost6am_image,(0,0))
+        screen.blit(thelost6am_image,(0,0))
 
         #create back button to homescreen
         if optback_button.draw(screen):
@@ -190,14 +230,59 @@ while running:
             nightlost = False
             mainMenuOpen = True
 
-    
+    ######################
     #main game
+    ######################
 
     if mainlevel == True:
         screen.fill((200,200,200))
 
         #start a timer
         counterfornight = counterfornight - 1
+
+        #Show the main screen
+
+        if currentScreen == 1:
+            #fill screen to show difference
+            screen.fill((0,0,250))
+            screen.blit(theofficebehindv0,(0,0))
+
+
+            #make the promotion time more lenthier than 30 a second
+            if (counterfornight % 100 == 0):
+                Monster1.mpromotion(lightOn,counterfornight)
+                #jUMPSCARE VALUE
+                if Monster1.get_mode() == 4:
+                    counterfornight = -10
+
+            if (counterfornight % 60 == 0):
+                Monster1.mdemotion(lightOn)
+
+            #Light button
+            if (lightOn == True) and (Monster1.get_mode() == 0):
+                screen.blit(theofficebehindv1,(0,0))
+            if (lightOn == True) and (Monster1.get_mode() == 1):
+                screen.blit(theofficebehindv2,(0,0))
+            if (lightOn == True) and (Monster1.get_mode() == 2):
+                screen.blit(theofficebehindv3,(0,0))
+            if (lightOn == True) and (Monster1.get_mode() == 3):
+                screen.blit(theofficebehindv4,(0,0))
+
+        # turn on light button
+        # with space button
+        keys = pygame.key.get_pressed()
+        #checks if it was the space button
+        if keys[K_SPACE]:
+            #switch the lights
+            #In order to stop the button from excessively repeating in one millisecond when the button has been pressed once.
+            if pygame.time.get_ticks() - lastClicked > 110:
+                lightOn = not lightOn
+                print("lights been switched")
+                lastClicked = pygame.time.get_ticks()
+
+
+            
+
 
         #if the counter is finished end game
         if counterfornight == -1:
@@ -209,6 +294,7 @@ while running:
         #jumpscare condition
         elif counterfornight == -10:
             print("night lost")
+            nightlost = True
             mainlevel = False
 
 
