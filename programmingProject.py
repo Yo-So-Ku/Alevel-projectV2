@@ -179,24 +179,32 @@ while running:
         #create the level select/night buttons
         if NightButton1.draw(screen):
             print("night 1")
+            #ENEMIES
+            Monster1 = MalusClass.Malus(8,0)
             nightOpen = False
             mainlevel = True
         if NightButton2.draw(screen):
             print("night 2")
+            #ENEMIES
+            Monster1 = MalusClass.Malus(11,0)
             nightOpen = False
             mainlevel = True
         if NightButton3.draw(screen):
             print("night 3")
+            #ENEMIES
+            Monster1 = MalusClass.Malus(14,0)
             nightOpen = False
             mainlevel = True
         if NightButton4.draw(screen):
             print("night 4")
+            #ENEMIES
+            Monster1 = MalusClass.Malus(16,0)
             nightOpen = False
             mainlevel = True
         if NightButton5.draw(screen):
             print("night 5")
             #ENEMIES
-            Monster1 = MalusClass.Malus(30,0)
+            Monster1 = MalusClass.Malus(19,0)
             nightOpen = False
             mainlevel = True
         #check if everything is unlocked
@@ -255,7 +263,7 @@ while running:
                 if Monster1.get_mode() == 4:
                     counterfornight = -10
 
-            if (counterfornight % 60 == 0):
+            if (counterfornight % 20 == 0):
                 Monster1.mdemotion(lightOn)
 
             #Light button
@@ -305,7 +313,7 @@ while running:
         #if the button pressed matched the "X" button then
         if event.type == pygame.QUIT:
             #close the window
-            running = False
+            running = False 
 
     #Update the screen
     pygame.display.update()

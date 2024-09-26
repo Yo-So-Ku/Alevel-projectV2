@@ -42,7 +42,7 @@ class Malus():
                 counterfornights = -10
                 print("ROUAAAAR")
 
-    def mdemotion (self,light_button):
+    def mdemotion(self,light_button):
         #if the light button is true and a movement opportunity arrises
         if (self.aggressionlevel < random.randint(0,21)) and (light_button == True):
             #move back a mode/ demote
