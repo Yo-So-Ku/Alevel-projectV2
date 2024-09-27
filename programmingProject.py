@@ -68,11 +68,11 @@ NightButton6_image = pygame.image.load("Images/NightButton6.png").convert_alpha(
 won6am_image = pygame.image.load("Images/6am_won.jpeg").convert_alpha()
 lost6am_image = pygame.image.load("Images/dead_lost.jpeg").convert_alpha()
 
-officebehindv0 = pygame.image.load("mainBackrounds/Officebehind screen.png").convert_alpha()
-officebehindv1 = pygame.image.load("mainBackrounds/Officebehindv1.jpg").convert_alpha()
-officebehindv2 = pygame.image.load("mainBackrounds/Officebehindv2.jpg").convert_alpha()
-officebehindv3 = pygame.image.load("mainBackrounds/Officebehindv3.jpg").convert_alpha()
-officebehindv4 = pygame.image.load("mainBackrounds/Officebehindv4.jpg").convert_alpha()
+officebehindv0 = pygame.image.load("mainBackgrounds/Officebehindv0.png").convert_alpha()
+officebehindv1 = pygame.image.load("mainBackgrounds/Officebehindv1.jpeg").convert_alpha()
+officebehindv2 = pygame.image.load("mainBackgrounds/Officebehindv2.jpeg").convert_alpha()
+officebehindv3 = pygame.image.load("mainBackgrounds/Officebehindv3.jpeg").convert_alpha()
+officebehindv4 = pygame.image.load("mainBackgrounds/Officebehindv4.jpeg").convert_alpha()
 
 #scaleing the main game images
 thewon6am_image = pygame.transform.scale(won6am_image,(1000,600))
