@@ -248,23 +248,15 @@ while running:
         #start a timer
         counterfornight = counterfornight - 1
 
-        #Show the main screen
+        #Show the main screens 0 to 2
+        if currentScreen == 0:
+            #fill the screen to show the difference visually
+            screen.fill((0,0,230))
 
         if currentScreen == 1:
             #fill screen to show difference
             screen.fill((0,0,250))
             screen.blit(theofficebehindv0,(0,0))
-
-
-            #make the promotion time more lenthier than 30 a second
-            if (counterfornight % 100 == 0):
-                Monster1.mpromotion(lightOn,counterfornight)
-                #jUMPSCARE VALUE
-                if Monster1.get_mode() == 4:
-                    counterfornight = -10
-
-            if (counterfornight % 20 == 0):
-                Monster1.mdemotion(lightOn)
 
             #Light button
             if (lightOn == True) and (Monster1.get_mode() == 0):
@@ -276,17 +268,52 @@ while running:
             if (lightOn == True) and (Monster1.get_mode() == 3):
                 screen.blit(theofficebehindv4,(0,0))
 
+        #####################################################
+        #####################################################
+        ## ## ##                                     ########
+        # ####                                  #############
+        # # # # #    monsters       ##  ##################### 
+        # ####                                  #############
+        ## ## ##                                     ########
+        #####################################################
+        #####################################################
+
+
+        #make the promotion time more longer than 30 a second
+        if (counterfornight % 100 == 0):
+            Monster1.mpromotion(lightOn,counterfornight)
+            #jUMPSCARE VALUE
+            if Monster1.get_mode() == 4:
+                counterfornight = -10
+
+        if (counterfornight % 20 == 0):
+            Monster1.mdemotion(lightOn)
+
         # turn on light button
         # with space button
         keys = pygame.key.get_pressed()
         #checks if it was the space button
-        if keys[K_SPACE]:
+        if keys[K_SPACE] and (currentScreen == 1):
             #switch the lights
             #In order to stop the button from excessively repeating in one millisecond when the button has been pressed once.
-            if pygame.time.get_ticks() - lastClicked > 110:
+            if pygame.time.get_ticks() - lastClicked > 130:
                 lightOn = not lightOn
                 print("lights been switched")
                 lastClicked = pygame.time.get_ticks()
+        # to switch to the left screen
+        if keys[K_LEFT] and (currentScreen ==1):
+            #change the current screen but not make the button spammable
+            if pygame.time.get_ticks() - lastClicked > 130:
+                #switch the screen
+                print("screen left")
+                currentScreen = 0
+        # to switch to the middle screen
+        if keys[K_RIGHT] and (currentScreen ==0):
+            #change the current screen but not make the button spammable
+            if pygame.time.get_ticks() - lastClicked > 130:
+                #switch the screen
+                print("screen middle")
+                currentScreen = 1
 
 
             
