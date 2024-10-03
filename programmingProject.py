@@ -28,6 +28,7 @@ nightbeaten = False
 nightlost = False
 currentScreen = 1
 lightOn = False
+doorOpen = True
 
 #frame limit
 clock = pygame.time.Clock()
@@ -74,6 +75,9 @@ officebehindv2 = pygame.image.load("mainBackgrounds/Officebehindv2.jpeg").conver
 officebehindv3 = pygame.image.load("mainBackgrounds/Officebehindv3.jpeg").convert_alpha()
 officebehindv4 = pygame.image.load("mainBackgrounds/Officebehindv4.jpeg").convert_alpha()
 
+officescreenv1 = pygame.image.load("mainBackgrounds/Officescreen.png").convert_alpha()
+officescreenv2 = pygame.image.load("mainBackgrounds/Officescreenv2.png").convert_alpha()
+
 #scaleing the main game images
 thewon6am_image = pygame.transform.scale(won6am_image,(1000,600))
 thelost6am_image = pygame.transform.scale(lost6am_image,(1000,600))
@@ -83,6 +87,9 @@ theofficebehindv1 = pygame.transform.scale(officebehindv1,(1000,600))
 theofficebehindv2 = pygame.transform.scale(officebehindv2,(1000,600))
 theofficebehindv3 = pygame.transform.scale(officebehindv3,(1000,600))
 theofficebehindv4 = pygame.transform.scale(officebehindv4,(1000,600))
+
+theofficescreenv1 = pygame.transform.scale(officescreenv1,(1000,600))
+theofficescreenv2 = pygame.transform.scale(officescreenv2,(1000,600))
 
 #create main menu buttons
 
@@ -252,6 +259,8 @@ while running:
         if currentScreen == 0:
             #fill the screen to show the difference visually
             screen.fill((0,0,230))
+            #show the office screen
+            screen.blit(theofficescreenv1,(0,0))
 
         if currentScreen == 1:
             #fill screen to show difference
@@ -296,24 +305,31 @@ while running:
         if keys[K_SPACE] and (currentScreen == 1):
             #switch the lights
             #In order to stop the button from excessively repeating in one millisecond when the button has been pressed once.
-            if pygame.time.get_ticks() - lastClicked > 130:
+            if pygame.time.get_ticks() - lastClicked > 150:
                 lightOn = not lightOn
                 print("lights been switched")
                 lastClicked = pygame.time.get_ticks()
         # to switch to the left screen
         if keys[K_LEFT] and (currentScreen ==1):
             #change the current screen but not make the button spammable
-            if pygame.time.get_ticks() - lastClicked > 130:
+            if pygame.time.get_ticks() - lastClicked > 150:
                 #switch the screen
                 print("screen left")
                 currentScreen = 0
         # to switch to the middle screen
         if keys[K_RIGHT] and (currentScreen ==0):
             #change the current screen but not make the button spammable
-            if pygame.time.get_ticks() - lastClicked > 130:
+            if pygame.time.get_ticks() - lastClicked > 150:
                 #switch the screen
                 print("screen middle")
                 currentScreen = 1
+        #close the door on the left screen
+        if keys[K_SPACE] and (currentScreen == 0):
+            #forces it to only be inside screen 0
+            if pygame.time.get_ticks() - lastclicked > 200:
+                #close the door
+                print("pressed door button")
+                doorOpen = not doorOpen
 
 
             
