@@ -8,6 +8,9 @@ import ButtonClass
 #Import Malus class
 import MalusClass
 
+#Import BasaranClass
+import BasaranClass
+
 #Importing exit from sys to be used to close the window
 from sys import exit
 
@@ -112,7 +115,7 @@ NightButton5 = ButtonClass.Button(50,400,NightButton5_image,1)
 NightButton6 = ButtonClass.Button(50,500,NightButton6_image,1)
 
 lastClicked = 0
-
+thistick = 0
 
 
 ###################################################################################################################
@@ -187,31 +190,36 @@ while running:
         if NightButton1.draw(screen):
             print("night 1")
             #ENEMIES
-            Monster1 = MalusClass.Malus(8,0)
+            Monster1 = MalusClass.Malus(3,0)
+            Monster2 = BasaranClass.Basaran(8,0)
             nightOpen = False
             mainlevel = True
         if NightButton2.draw(screen):
             print("night 2")
             #ENEMIES
-            Monster1 = MalusClass.Malus(11,0)
+            Monster1 = MalusClass.Malus(6,0)
+            Monster2 = BasaranClass.Basaran(10,0)
             nightOpen = False
             mainlevel = True
         if NightButton3.draw(screen):
             print("night 3")
             #ENEMIES
-            Monster1 = MalusClass.Malus(14,0)
+            Monster1 = MalusClass.Malus(7,0)
+            Monster2 = BasaranClass.Basaran(12,0)
             nightOpen = False
             mainlevel = True
         if NightButton4.draw(screen):
             print("night 4")
             #ENEMIES
-            Monster1 = MalusClass.Malus(16,0)
+            Monster1 = MalusClass.Malus(10,0)
+            Monster2 = BasaranClass.Basaran(15,0)
             nightOpen = False
             mainlevel = True
         if NightButton5.draw(screen):
             print("night 5")
             #ENEMIES
-            Monster1 = MalusClass.Malus(19,0)
+            Monster1 = MalusClass.Malus(14,0)
+            Monster2 = BasaranClass.Basaran(17,0)
             nightOpen = False
             mainlevel = True
         #check if everything is unlocked
@@ -261,6 +269,10 @@ while running:
             screen.fill((0,0,230))
             #show the office screen
             screen.blit(theofficescreenv1,(0,0))
+            #show the door closed in tha case that the door is closed
+            if doorOpen == False:
+                #print the image onto the screen
+                screen.blit(theofficescreenv2,(0,0))
 
         if currentScreen == 1:
             #fill screen to show difference
@@ -289,12 +301,13 @@ while running:
 
 
         #make the promotion time more longer than 30 a second
-        if (counterfornight % 100 == 0):
+        if (counterfornight % 120 == 0):
             Monster1.mpromotion(lightOn,counterfornight)
+            Monster2.bpromotion(doorOpen,counterfornight)
             #jUMPSCARE VALUE
-            if Monster1.get_mode() == 4:
+            if (Monster1.get_mode() == 4) or (Monster2.get_mode() == 11):
                 counterfornight = -10
-
+            
         if (counterfornight % 20 == 0):
             Monster1.mdemotion(lightOn)
 
@@ -324,10 +337,12 @@ while running:
                 print("screen middle")
                 currentScreen = 1
         #close the door on the left screen
-        if keys[K_SPACE] and (currentScreen == 0):
+        if keys[K_SPACE] and (currentScreen ==0):
             #forces it to only be inside screen 0
-            if pygame.time.get_ticks() - lastclicked > 200:
+            thistick = thistick + 1
+            if thistick > 5:
                 #close the door
+                thistick = 0
                 print("pressed door button")
                 doorOpen = not doorOpen
 
