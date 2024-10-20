@@ -32,6 +32,8 @@ nightlost = False
 currentScreen = 1
 lightOn = False
 doorOpen = True
+camera_open = False
+currentcamera = 0
 
 #frame limit
 clock = pygame.time.Clock()
@@ -43,7 +45,7 @@ pygame.display.set_caption("a Malicous Nights")
 screen = pygame.display.set_mode((1000,600))
 
 #time
-counterfornight = 600
+counterfornight = 6000
 
 
 # Load main menu images
@@ -81,6 +83,11 @@ officebehindv4 = pygame.image.load("mainBackgrounds/Officebehindv4.jpeg").conver
 officescreenv1 = pygame.image.load("mainBackgrounds/Officescreen.png").convert_alpha()
 officescreenv2 = pygame.image.load("mainBackgrounds/Officescreenv2.png").convert_alpha()
 
+Cameranormal = pygame.image.load("mainBackgrounds/Camera.jpeg").convert_alpha()
+Camerabad = pygame.image.load("mainBackgrounds/camerabad.jpeg").convert_alpha()
+Cameravision = pygame.image.load("mainBackgrounds/Cameravision.png").convert_alpha()
+
+
 #scaleing the main game images
 thewon6am_image = pygame.transform.scale(won6am_image,(1000,600))
 thelost6am_image = pygame.transform.scale(lost6am_image,(1000,600))
@@ -93,6 +100,10 @@ theofficebehindv4 = pygame.transform.scale(officebehindv4,(1000,600))
 
 theofficescreenv1 = pygame.transform.scale(officescreenv1,(1000,600))
 theofficescreenv2 = pygame.transform.scale(officescreenv2,(1000,600))
+
+Cameranormal = pygame.transform.scale(Cameranormal,(1000,600))
+Camerabad = pygame.transform.scale(Camerabad,(1000,600))
+Cameravision = pygame.transform.scale(Cameravision,(200,90))
 
 #create main menu buttons
 
@@ -116,6 +127,26 @@ NightButton6 = ButtonClass.Button(50,500,NightButton6_image,1)
 
 lastClicked = 0
 thistick = 0
+
+
+#Subprogram 
+
+#Draw test on the screen.
+
+thisfont = pygame.font.SysFont("Arial", 30)
+
+def write(text,font,colour,x,y):
+    img = font.render(text, True, colour)
+    screen.blit(img,(x,y))
+#Subprogram
+def Switchcamera(thecurrentcam):
+    #check its not at camera 10
+    if thecurrentcam != 10:
+        #add to it
+        return thecurrentcam + 1
+    else:
+        return 0
+
 
 
 ###################################################################################################################
@@ -274,6 +305,22 @@ while running:
                 #print the image onto the screen
                 screen.blit(theofficescreenv2,(0,0))
 
+            #Now for the camera.
+            if camera_open == True:
+                #cover the screen to test for a visual difference.
+                screen.fill((0,0,230))
+                screen.blit(Cameranormal,(0,0))
+                screen.blit(Cameravision,(700,510))
+                write(f"camera, {currentcamera}",thisfont, (0,200,200), 360,550)
+                #check if the monster needs to be displayed.
+                if Monster2.get_mode() == currentcamera:
+                    #show the monster
+                    screen.blit(Camerabad,(0,0))
+                    screen.blit(Cameravision,(700,510))
+                    write(f"camera, {currentcamera}",thisfont, (200,0,0), 360,550)
+                
+
+
         if currentScreen == 1:
             #fill screen to show difference
             screen.fill((0,0,250))
@@ -307,9 +354,13 @@ while running:
             #jUMPSCARE VALUE
             if (Monster1.get_mode() == 4) or (Monster2.get_mode() == 11):
                 counterfornight = -10
+            if Monster2.get_mode() > 10:
+                counterfornight = -10
             
         if (counterfornight % 20 == 0):
             Monster1.mdemotion(lightOn)
+
+
 
         # turn on light button
         # with space button
@@ -338,16 +389,23 @@ while running:
                 currentScreen = 1
         #close the door on the left screen
         if keys[K_SPACE] and (currentScreen ==0):
-            #forces it to only be inside screen 0
-            thistick = thistick + 1
             if thistick > 5:
                 #close the door
                 thistick = 0
                 print("pressed door button")
                 doorOpen = not doorOpen
-
-
-            
+        if keys[K_c]:
+            #open the camera
+            camera_open = True
+        if keys[K_v]:
+            #close the camera
+            camera_open = False
+        thistick = thistick + 1
+        if keys[K_x]:
+            if thistick > 9:
+                #move to the next camera
+                currentcamera = Switchcamera(currentcamera)
+                thistick = 0
 
 
         #if the counter is finished end game

@@ -35,15 +35,24 @@ class Basaran():
             if (self.mode == 10) and (door_open == True):
                 #end the night
                 print("REOARR")
-                self.mode = 11
+                self.mode = self.mode + 11
+
                 counterfornights = -10
             #Else if the door is already closed
-            if (self.mode == 10) and (door_open == False):
+            elif (self.mode == 10) and (door_open == False):
                 #move enemy back to their spawn position
                 print("Back to spawn")
-                self.mode = 0
+                self.mode = self.mode - 10
             #the jump/ skip some modes/ camera condition
-            if (self.mode == 1 or 4 or 7) and (door_open == False):
+            if (self.mode == 1) and (door_open == False):
+                #jump
+                print("Leap forward")
+                self.mode = self.mode + 3
+            elif (self.mode == 4) and (door_open == False):
+                #jump
+                print("Leap forward")
+                self.mode = self.mode + 3
+            elif (self.mode == 7) and (door_open == False):
                 #jump
                 print("Leap forward")
                 self.mode = self.mode + 3
