@@ -1,5 +1,5 @@
-#importing pygame to gain acces to its functions.
 import pygame
+import random
 from pygame.locals import *
 
 #import ButtonClass
@@ -34,6 +34,10 @@ lightOn = False
 doorOpen = True
 camera_open = False
 currentcamera = 0
+panelopen = False
+
+lighttimer = 2700
+doortimer = 2700
 
 #frame limit
 clock = pygame.time.Clock()
@@ -87,6 +91,10 @@ Cameranormal = pygame.image.load("mainBackgrounds/Camera.jpeg").convert_alpha()
 Camerabad = pygame.image.load("mainBackgrounds/camerabad.jpeg").convert_alpha()
 Cameravision = pygame.image.load("mainBackgrounds/Cameravision.png").convert_alpha()
 
+controlpanel = pygame.image.load("mainBackgrounds/control panel.PNG").convert_alpha()
+controlpanelbad = pygame.image.load("mainBackgrounds/control panel bad.PNG").convert_alpha()
+controlpanelbar = pygame.image.load("mainBackgrounds/control panel bar.PNG").convert_alpha()
+
 
 #scaleing the main game images
 thewon6am_image = pygame.transform.scale(won6am_image,(1000,600))
@@ -104,6 +112,10 @@ theofficescreenv2 = pygame.transform.scale(officescreenv2,(1000,600))
 Cameranormal = pygame.transform.scale(Cameranormal,(1000,600))
 Camerabad = pygame.transform.scale(Camerabad,(1000,600))
 Cameravision = pygame.transform.scale(Cameravision,(200,90))
+
+thecontrolpanel = pygame.transform.scale(controlpanel,(800,480))
+thecontrolpanelbad = pygame.transform.scale(controlpanelbad,(800,480))
+thecontrolpanelbar = pygame.transform.scale(controlpanelbar,(80,38))
 
 #create main menu buttons
 
@@ -336,6 +348,24 @@ while running:
             if (lightOn == True) and (Monster1.get_mode() == 3):
                 screen.blit(theofficebehindv4,(0,0))
 
+        if panelopen == True:
+            #show the screen
+            screen.blit(thecontrolpanel, (100,60))
+
+            #control panel bars
+            if lighttimer//10 > -1:
+                thecontrolpanelbar = pygame.transform.scale(controlpanelbar,(lighttimer//10,32))
+            else:
+                thecontrolpanelbar = pygame.transform.scale(controlpanelbar,(0,32))
+            screen.blit(thecontrolpanelbar,(310,355))
+            
+        
+        #screen 3
+        if currentScreen == 2:
+            #fill screen to show the difference
+            screen.fill((0,0,250))
+            screen.blit(theofficebehindv0,(0,0))
+
         #####################################################
         #####################################################
         ## ## ##                                     ########
@@ -345,6 +375,28 @@ while running:
         ## ## ##                                     ########
         #####################################################
         #####################################################
+
+        #now for the control panel settings of lights and doors.
+
+        if lightOn == True:
+            #check if the light timer has reached zero
+            if lighttimer <= 0:
+                #turn of the lights
+                lightOn = False
+            #now decrease the light timer.
+            else:
+                #decrease the timer
+                lighttimer = lighttimer - random.randint(0,5)
+
+        if doorOpen == False:
+            #check if the door timer has reached zero
+            if doortimer <= 0:
+                #opens the door
+                doorOpen = True
+            #now decrease the door timer.
+            else:
+                #decrease the timer
+                doortimer = doortimer - random.randint(0,5)
 
 
         #make the promotion time more longer than 30 a second
@@ -374,14 +426,14 @@ while running:
                 print("lights been switched")
                 lastClicked = pygame.time.get_ticks()
         # to switch to the left screen
-        if keys[K_LEFT] and (currentScreen ==1):
+        if keys[K_LEFT] and (currentScreen ==1) and (panelopen == False):
             #change the current screen but not make the button spammable
             if pygame.time.get_ticks() - lastClicked > 150:
                 #switch the screen
                 print("screen left")
                 currentScreen = 0
         # to switch to the middle screen
-        if keys[K_RIGHT] and (currentScreen ==0):
+        if keys[K_RIGHT] and (currentScreen ==0) and (camera_open == False): 
             #change the current screen but not make the button spammable
             if pygame.time.get_ticks() - lastClicked > 150:
                 #switch the screen
@@ -394,12 +446,19 @@ while running:
                 thistick = 0
                 print("pressed door button")
                 doorOpen = not doorOpen
-        if keys[K_c]:
+        if keys[K_c]  and (currentScreen ==0):
             #open the camera
             camera_open = True
         if keys[K_v]:
             #close the camera
             camera_open = False
+            #close the control panel
+            panelopen = False
+        if keys[K_c] and (currentScreen ==1):
+            #Open the control panel
+            panelopen = True
+            print("open panel")
+        
         thistick = thistick + 1
         if keys[K_x]:
             if thistick > 9:
