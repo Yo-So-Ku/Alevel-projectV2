@@ -35,6 +35,8 @@ doorOpen = True
 camera_open = False
 currentcamera = 0
 panelopen = False
+rebootinglights = False
+rebootingdoors = False
 
 lighttimer = 2700
 doortimer = 2700
@@ -95,6 +97,9 @@ controlpanel = pygame.image.load("mainBackgrounds/control panel.PNG").convert_al
 controlpanelbad = pygame.image.load("mainBackgrounds/control panel bad.PNG").convert_alpha()
 controlpanelbar = pygame.image.load("mainBackgrounds/control panel bar.PNG").convert_alpha()
 
+rebootimage = pygame.image.load("Images/RebootButtonImage.png").convert_alpha()
+rebootimage2 = pygame.image.load("Images/RebootButtonImage2.png").convert_alpha()
+
 
 #scaleing the main game images
 thewon6am_image = pygame.transform.scale(won6am_image,(1000,600))
@@ -136,6 +141,9 @@ NightButton3 = ButtonClass.Button(50,200,NightButton3_image,1)
 NightButton4 = ButtonClass.Button(50,300,NightButton4_image,1)
 NightButton5 = ButtonClass.Button(50,400,NightButton5_image,1)
 NightButton6 = ButtonClass.Button(50,500,NightButton6_image,1)
+
+RebootButton1 = ButtonClass.Button(300,395, rebootimage,0.5)
+RebootButton2 = ButtonClass.Button(300,220, rebootimage,0.5)
 
 lastClicked = 0
 thistick = 0
@@ -352,12 +360,33 @@ while running:
             #show the screen
             screen.blit(thecontrolpanel, (100,60))
 
+            #reboot buttons
+            if (rebootinglights == False) and (lightOn == False):
+                #create the button
+                if RebootButton1.draw(screen):
+                    #add more to the light timer
+                    lighttimer = lighttimer + random.randint(1,15)
+            #door buttons
+            if (rebootingdoors == False) and (doorOpen == True):
+                #create the button
+                if RebootButton2.draw(screen):
+                    #add more to door timer
+                    doortimer = doortimer + random.randint(7,12)
+            
+
             #control panel bars
             if lighttimer//10 > -1:
                 thecontrolpanelbar = pygame.transform.scale(controlpanelbar,(lighttimer//10,32))
             else:
                 thecontrolpanelbar = pygame.transform.scale(controlpanelbar,(0,32))
             screen.blit(thecontrolpanelbar,(310,355))
+
+            #door control panel bars
+            if doortimer//10 > -1:
+                thecontrolpanelbar2 = pygame.transform.scale(controlpanelbar,(doortimer//10,32))
+            else:
+                theconrtolpanelbar2 = pygame.transorm.scale(controlpanelbar,(0,32))
+            screen.blit(thecontrolpanelbar2,(310,180))
             
         
         #screen 3
